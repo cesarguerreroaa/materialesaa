@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taller AA — La Herida del Abandono</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --negro:          #080c14;
+    --negro-suave:    #0e1420;
+    --azul:           #0057ff;
+    --azul-electro:   #1a6fff;
+    --azul-brillante: #3d8bff;
+    --azul-pale:      #dce8ff;
+    --azul-panel:     #eef3fc;
+    --azul-linea:     #b8d0ff;
+    --blanco:         #f0f4ff;
+    --texto:          #0e1420;
+    --texto-suave:    #2a3550;
+    --cyan:           #00c8ff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lora', Georgia, serif;
+    background-color: #0a0f1e;
+    background-image:
+      radial-gradient(ellipse 80% 60% at 20% 10%, rgba(0,87,255,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 90%, rgba(0,200,255,0.12) 0%, transparent 60%);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    color: var(--texto);
+  }
+
+  .folleto {
+    max-width: 780px;
+    margin: 0 auto;
+    background: var(--blanco);
+    border-radius: 6px;
+    box-shadow:
+      0 0 0 1px rgba(0,87,255,0.25),
+      0 8px 60px rgba(0,0,0,0.7),
+      0 0 80px rgba(0,87,255,0.08);
+    overflow: hidden;
+    position: relative;
+  }
+
+  .folleto::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+    background-size: 300px 300px;
+    z-index: 1;
+  }
+
+  /* ─── PORTADA ─── */
+  .portada {
+    background: linear-gradient(160deg, var(--negro) 0%, #0c1530 60%, #081020 100%);
+    padding: 3.5rem 3rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .portada::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 0%, rgba(0,87,255,0.22) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 85% 80%, rgba(0,200,255,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .badge-aa {
+    display: inline-block;
+    border: 1.5px solid rgba(0,87,255,0.6);
+    color: var(--azul-brillante);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 0.35rem 1.1rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .portada h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    line-height: 1.15;
+    color: var(--blanco);
+    position: relative;
+    z-index: 2;
+    margin-bottom: 0.4rem;
+  }
+
+  .portada h1 em {
+    display: block;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: var(--azul-brillante);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.3rem;
+  }
+
+  .credito {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.82rem;
+    color: rgba(180,200,255,0.5);
+    margin-top: 0.8rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .oracion-portada {
+    margin-top: 2.2rem;
+    border: 1px solid rgba(0,87,255,0.3);
+    border-left: 3px solid var(--azul-electro);
+    background: rgba(0,87,255,0.06);
+    border-radius: 3px;
+    padding: 1.4rem 1.6rem;
+    text-align: left;
+    position: relative;
+    z-index: 2;
+  }
+
+  .oracion-portada .oracion-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--azul-brillante);
+    margin-bottom: 0.8rem;
+  }
+
+  .oracion-portada p {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: rgba(220,235,255,0.85);
+  }
+
+  /* ─── CUERPO ─── */
+  .cuerpo {
+    padding: 3rem 3rem 2rem;
+    background: var(--blanco);
+  }
+
+  .seccion {
+    margin-bottom: 2.8rem;
+  }
+
+  .seccion-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 1.1rem;
+    border-bottom: 1px solid var(--azul-linea);
+    padding-bottom: 0.5rem;
+  }
+
+  .seccion-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--azul);
+    line-height: 1;
+    min-width: 2rem;
+  }
+
+  .seccion-titulo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--texto);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .seccion p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: var(--texto-suave);
+    margin-bottom: 0.7rem;
+  }
+
+  .seccion p:last-child { margin-bottom: 0; }
+
+  /* Quote box */
+  .quote-box {
+    background: var(--azul-panel);
+    border-left: 3px solid var(--azul-electro);
+    border-radius: 0 3px 3px 0;
+    padding: 1rem 1.4rem;
+    margin: 1.1rem 0;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--texto);
+    line-height: 1.75;
+  }
+
+  /* Historia box */
+  .historia-box {
+    background: var(--azul-panel);
+    border: 1px solid var(--azul-linea);
+    border-radius: 4px;
+    padding: 1.6rem 1.8rem 1.6rem 2.4rem;
+    margin: 1.1rem 0;
+    position: relative;
+    font-size: 0.93rem;
+    line-height: 1.9;
+    color: var(--texto-suave);
+  }
+
+  .historia-box::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    line-height: 1;
+    color: var(--azul-linea);
+    position: absolute;
+    top: 0.2rem;
+    left: 0.6rem;
+  }
+
+  .historia-box p { margin-bottom: 0.6rem; }
+  .historia-box p:last-child { margin-bottom: 0; }
+
+  /* Lista herida */
+  .lista-herida {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    counter-reset: lista;
+  }
+
+  .lista-herida li {
+    counter-increment: lista;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--azul-pale);
+    font-size: 0.93rem;
+    line-height: 1.6;
+    color: var(--texto-suave);
+  }
+
+  .lista-herida li:last-child { border-bottom: none; }
+
+  .lista-herida li::before {
+    content: counter(lista, upper-roman);
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem;
+    color: var(--azul);
+    min-width: 1.6rem;
+    padding-top: 0.15rem;
+    font-weight: 700;
+  }
+
+  /* Máscaras */
+  .mascaras {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+    margin: 1rem 0;
+  }
+
+  .mascara-item {
+    background: var(--azul-panel);
+    border: 1px solid var(--azul-linea);
+    border-top: 2px solid var(--azul);
+    border-radius: 3px;
+    padding: 0.9rem 1rem;
+  }
+
+  .mascara-item strong {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: var(--azul);
+    margin-bottom: 0.35rem;
+  }
+
+  .mascara-item p {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: var(--texto-suave);
+    margin: 0 !important;
+  }
+
+  /* Pasos */
+  .pasos {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+    counter-reset: paso;
+  }
+
+  .pasos li {
+    counter-increment: paso;
+    display: flex;
+    align-items: flex-start;
+    gap: 1.1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--azul-pale);
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: var(--texto-suave);
+  }
+
+  .pasos li:last-child { border-bottom: none; }
+
+  .pasos li::before {
+    content: counter(paso);
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--blanco);
+    background: var(--azul);
+    min-width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 0.05rem;
+  }
+
+  /* Frase de impacto */
+  .frase-impacto {
+    background: linear-gradient(135deg, var(--negro) 0%, #0c1835 100%);
+    border-radius: 4px;
+    padding: 2rem 2.2rem;
+    margin: 2rem 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0,87,255,0.2), inset 0 0 40px rgba(0,87,255,0.05);
+  }
+
+  .frase-impacto::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,87,255,0.15) 0%, transparent 70%);
+  }
+
+  .frase-impacto p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.6;
+    color: var(--blanco);
+    position: relative;
+    z-index: 1;
+    text-shadow: 0 0 20px rgba(0,87,255,0.5);
+    margin: 0 !important;
+  }
+
+  /* ─── CIERRE ─── */
+  .cierre {
+    background: linear-gradient(160deg, #0a0f1e 0%, #0c1530 60%, #080c14 100%);
+    padding: 2.8rem 3rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cierre::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 100%, rgba(0,87,255,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 30% at 15% 20%, rgba(0,200,255,0.1) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .cierre-frase {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cierre-frase p {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: rgba(220,235,255,0.9);
+  }
+
+  .cierre-frase strong {
+    display: block;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 900;
+    color: var(--blanco);
+    margin-top: 0.5rem;
+    text-shadow: 0 0 25px rgba(0,87,255,0.5);
+  }
+
+  .oraciones-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .oracion-card {
+    border: 1px solid rgba(0,87,255,0.3);
+    border-top: 2px solid var(--azul-electro);
+    background: rgba(0,87,255,0.05);
+    border-radius: 3px;
+    padding: 1.4rem 1.3rem;
+  }
+
+  .oracion-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--azul-brillante);
+    margin-bottom: 0.9rem;
+  }
+
+  .oracion-card p {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    line-height: 1.85;
+    color: rgba(210,225,255,0.8);
+  }
+
+  @media (max-width: 560px) {
+    .portada { padding: 2.5rem 1.5rem 2rem; }
+    .portada h1 { font-size: 2rem; }
+    .cuerpo { padding: 2rem 1.5rem; }
+    .mascaras { grid-template-columns: 1fr; }
+    .cierre { padding: 2rem 1.5rem 2.5rem; }
+    .oraciones-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="folleto">
+
+  <!-- PORTADA -->
+  <header class="portada">
+    <div class="badge-aa">Alcohólicos Anónimos · Taller</div>
+    <h1>
+      <em>La herida de</em>
+      El Abandono
+    </h1>
+    <p class="credito">Elaborado por: César G.</p>
+
+    <div class="oracion-portada">
+      <div class="oracion-label">Oración del Día</div>
+      <p>
+        Señor, hoy me presento ante ti con el peso de lo que no pude elegir:
+        los brazos que no llegaron, las voces que se fueron,
+        los silencios que aprendí a interpretar como "no mereces".<br><br>
+        Dame hoy la valentía de mirar esa herida sin huir de ella.
+        Que donde hubo ausencia, pueda yo encontrar tu presencia.
+        Que donde aprendí a sobrevivir solo, aprenda hoy a recibir ayuda.
+        Gracias porque en este grupo nadie está abandonado. Amén.
+      </p>
+    </div>
+  </header>
+
+  <!-- CUERPO -->
+  <main class="cuerpo">
+
+    <!-- SECCIÓN 1: ¿Qué es la herida del abandono? -->
+    <section class="seccion">
+      <div class="seccion-header">
+        <span class="seccion-num">1</span>
+        <span class="seccion-titulo">¿Qué es la herida del abandono?</span>
+      </div>
+      <p>La herida del abandono se forma cuando alguien que debió quedarse… se fue. O cuando alguien que debió estar presente, simplemente nunca llegó.</p>
+      <p>No siempre es una partida física. A veces es un padre que vivía en casa pero nunca te vio. Una madre que estaba pero no estaba.</p>
+      <div class="quote-box">
+        El niño o la niña que fuimos aprendió algo muy peligroso: que no era suficiente para que se quedaran.
+      </div>
+      <ul class="lista-herida">
+        <li>La ausencia de un padre por trabajo, enfermedad o adicción</li>
+        <li>Una madre emocionalmente distante aunque físicamente presente</li>
+        <li>Un divorcio que nadie explicó al niño</li>
+        <li>Una pérdida que dejó a alguien solo demasiado pronto</li>
+        <li>Una infancia donde pedir ayuda no servía de nada</li>
+      </ul>
+    </section>
+
+    <!-- SECCIÓN 2: Historia — Valeria -->
+    <section class="seccion">
+      <div class="seccion-header">
+        <span class="seccion-num">2</span>
+        <span class="seccion-titulo">Una historia que muchos conocemos</span>
+      </div>
+      <div class="historia-box">
+        <p>Valeria tenía seis años cuando su papá se fue de la casa. No hubo explicaciones. Un día estaba, al siguiente no.</p>
+        <p>Valeria esperaba en la ventana cada tarde. Miraba los coches pasar y contaba: "Uno, dos, tres… si en diez coches no viene, no viene hoy." Nunca llegó.</p>
+        <p>Con el tiempo aprendió a no esperar. A no pedir. A decir "no me importa" antes de que le importara demasiado. En la escuela era la niña que lo hacía todo sola — no porque quisiera, sino porque pedir ayuda significaba que alguien podía decir que no.</p>
+        <p>A los dieciocho años, Valeria eligió — sin saberlo — a alguien igual de ausente que su papá. Cuando ese hombre se fue, no lloró el amor. Lloró los seis años que estuvo en la ventana contando coches.</p>
+        <p><strong>La herida del abandono no se fue con la infancia. Se fue con ella a todos lados.</strong></p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 3: Las máscaras en la adultez -->
+    <section class="seccion">
+      <div class="seccion-header">
+        <span class="seccion-num">3</span>
+        <span class="seccion-titulo">Las máscaras en la adultez</span>
+      </div>
+      <p>Cuando la herida del abandono no se trabaja, aprende a disfrazarse. Se vuelve invisible, pero sigue dirigiendo nuestras decisiones.</p>
+      <div class="mascaras">
+        <div class="mascara-item">
+          <strong>Independencia extrema</strong>
+          <p>"Yo no necesito a nadie." El miedo al abandono disfrazado de autosuficiencia.</p>
+        </div>
+        <div class="mascara-item">
+          <strong>Control excesivo</strong>
+          <p>"Si controlo todo, nadie puede dejarme de sorpresa." La certeza como escudo.</p>
+        </div>
+        <div class="mascara-item">
+          <strong>Hiperapego</strong>
+          <p>"Si me porto bien y doy todo de mí, quizás esta vez se quedan." El amor como trabajo.</p>
+        </div>
+        <div class="mascara-item">
+          <strong>Autosabotaje</strong>
+          <p>"Mejor los alejo yo primero." Huir antes de ser abandonado.</p>
+        </div>
+      </div>
+      <div class="quote-box">
+        Todas estas máscaras dicen lo mismo por dentro: "Tengo miedo de que me vuelvan a dejar."
+      </div>
+    </section>
+
+    <!-- SECCIÓN 4: La sustancia como escape -->
+    <section class="seccion">
+      <div class="seccion-header">
+        <span class="seccion-num">4</span>
+        <span class="seccion-titulo">La sustancia como respuesta al vacío</span>
+      </div>
+      <p>Cuando el dolor del abandono se vuelve insoportable, cuando el silencio duele demasiado, cuando la soledad es tan profunda que ya no sabemos cómo llenarla…</p>
+      <div class="quote-box">
+        La sustancia llega y dice: "Yo nunca me voy. Conmigo no te van a dejar."
+      </div>
+      <p>Y por un rato cumple su promesa. Adormece, llena el vacío, hace que los recuerdos se desvanezcan. Pero lo que la sustancia no dice…</p>
+      <p>…es que ella también nos abandona. Nos abandona la salud, la familia, las personas que más amamos. Y al final, nos abandonamos a nosotros mismos.</p>
+    </section>
+
+    <!-- FRASE DE IMPACTO -->
+    <div class="frase-impacto">
+      <p>Lo que pasó no fue tu culpa.<br>No te fuiste tú. Se fueron ellos.<br>
+      <strong>Y no porque no fueras suficiente.</strong></p>
+    </div>
+
+    <!-- SECCIÓN 5: El golpe de conciencia -->
+    <section class="seccion">
+      <div class="seccion-header">
+        <span class="seccion-num">5</span>
+        <span class="seccion-titulo">Lo que el niño necesitaba escuchar</span>
+      </div>
+      <p>Ese niño o esa niña que un día esperó en la ventana, que contó coches, que aprendió a no pedir… todavía vive en nosotros. Y sigue tomando decisiones. Sigue eligiendo parejas, alejando personas, diciéndole al mundo "no me importa" cuando por dentro grita "quédate".</p>
+      <div class="quote-box">
+        El problema no es que ese niño exista. El problema es que nadie le ha dicho la verdad: lo que pasó no fue su culpa. Se fueron ellos — no porque él no fuera suficiente, sino porque ellos tampoco tenían todo lo que necesitaban para quedarse.
+      </div>
+    </section>
+
+    <!-- SECCIÓN 6: Inicio de sanación -->
+    <section class="seccion">
+      <div class="seccion-header">
+        <span class="seccion-num">6</span>
+        <span class="seccion-titulo">El camino hacia la sanación</span>
+      </div>
+      <p>Sanar la herida del abandono no sucede de la noche a la mañana. Pero sí hay pasos concretos que podemos dar hoy:</p>
+      <ul class="pasos">
+        <li><strong>Reconocer que existe.</strong> Hoy ya lo hicieron. Esto es el Primer Paso de AA: admitir que algo en nosotros nos tiene sin poder.</li>
+        <li><strong>Dejar de culpar al niño que fuimos.</strong> Él hizo lo que pudo con lo que tenía. Merece compasión, no condena.</li>
+        <li><strong>Confiar en que hay personas que sí se quedan.</strong> Este grupo es la prueba. Aquí hay personas que llevan meses, años, apareciendo.</li>
+        <li><strong>Aprender a pedir ayuda.</strong> La herida dice "para qué, si de todos modos se van." Pero la recuperación sucede en comunidad, no en aislamiento.</li>
+      </ul>
+      <div class="quote-box">
+        La herida del abandono se sana siendo encontrado. Y hoy, aquí, ya los encontramos.
+      </div>
+    </section>
+
+    <!-- SECCIÓN 7: Cierre de contenido -->
+    <section class="seccion">
+      <div class="seccion-header">
+        <span class="seccion-num">7</span>
+        <span class="seccion-titulo">Una elección que vale todo</span>
+      </div>
+      <p>No vinieron hoy por casualidad. Ese niño que esperaba en la ventana merece una respuesta diferente. Y esa respuesta son ustedes hoy, aquí, eligiendo la recuperación.</p>
+      <p>La herida del abandono no desaparece de la noche a la mañana. Pero sí se puede transformar — en presencia, en comunidad, en la capacidad de quedarse y de dejar que otros se queden.</p>
+      <div class="quote-box">
+        Cada vez que aparecen en estas juntas, están eligiéndose a ustedes mismos. Y eso… vale todo.
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CIERRE -->
+  <footer class="cierre">
+    <div class="cierre-frase">
+      <p>No estás solo.</p>
+      <strong>Nunca más.</strong>
+    </div>
+
+    <div class="oraciones-grid">
+      <div class="oracion-card">
+        <h4>Oración de la Responsabilidad</h4>
+        <p>
+          Yo soy responsable...<br>
+          Cuando cualquiera, dondequiera<br>
+          extiende su mano pidiendo ayuda,<br>
+          yo quiero que la mano de A.A.<br>
+          esté siempre allí.<br>
+          Y por esto: Yo soy responsable.
+        </p>
+      </div>
+      <div class="oracion-card">
+        <h4>Oración de la Serenidad</h4>
+        <p>
+          Dios,<br>
+          concédeme la serenidad<br>
+          para aceptar las cosas que no puedo cambiar,<br>
+          valor<br>
+          para cambiar aquellas que sí puedo,<br>
+          y sabiduría<br>
+          para reconocer la diferencia.
+        </p>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
